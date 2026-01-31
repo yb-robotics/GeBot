@@ -13,4 +13,17 @@
         <color rgba ="0 0 1 1" />
     </material>
 
+<xacro:macro name="box_inertia" params="m x y z o_xyz o_rpy">
+    <inertial>
+        <origin xyz="${o_xyz}" rpy="${o_rpy}"/>
+        <mass value="${m}"/>
+        <inertia
+            ixx="${(m/12) * (y*y + z*z)}"
+            iyy="${(m/12) * (x*x + z*z)}"
+            izz="${(m/12) * (x*x + y*y)}"
+            ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+</xacro:macro>
+
+
 </robot>
