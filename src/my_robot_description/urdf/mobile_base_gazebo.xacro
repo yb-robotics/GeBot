@@ -6,12 +6,13 @@
 
     <gazebo>
         <plugin filename="gz-sim-diff-drive-system" name="gz::sim::systems::DiffDrive">
+            <odom_topic>/odom</odom_topic>
             <left_joint>base_left_wheel_joint</left_joint>
             <right_joint>base_right_wheel_joint</right_joint>
             <wheel_separation>0.45</wheel_separation>
             <wheel_radius>0.1</wheel_radius>
             
-            <topic>/model/my_robot/cmd_vel</topic>
+            
 
             <frame_id>odom</frame_id>
             <child_frame_id>base_footprint_link</child_frame_id>
