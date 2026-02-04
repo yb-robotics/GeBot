@@ -24,7 +24,9 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            "move_robot=my_robot_control.move_robot:main"
+            "move_robot=my_robot_control.move_robot:main",
+            "encoder_data=my_robot_control.encoder_data:main"
+
         ],
     },
 )
