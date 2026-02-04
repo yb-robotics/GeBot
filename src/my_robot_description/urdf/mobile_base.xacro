@@ -3,9 +3,10 @@
 
     <xacro:property name="wheel_radius" value="0.1"/>
     <xacro:property name="wheel_width"  value="0.05"/>
-    <xacro:property name="base_length"  value="0.6"/>
+    <xacro:property name="base_length"  value="0.8"/>
     <xacro:property name="base_width"  value="0.4"/>
     <xacro:property name="base_height"  value="0.2"/>
+    <xacro:property name="lidar" value="0.05" />
 
     <link name= "base_footprint_link">
         <!-- <visual>
@@ -77,6 +78,30 @@
         </link>
     </xacro:macro>
 
+    <link name ="lidar_link" >
+        <visual>
+            <geometry>
+                <cylinder radius="${lidar}" length="${lidar}"/>
+            </geometry>
+            <origin xyz="0 0 0.025" rpy="0 0 0" />
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder radius="${lidar}" length="${lidar}"/>
+            </geometry>
+            <origin xyz="0 0 0.025" rpy="0 0 0" />
+        </collision>
+            <inertial>
+                <origin xyz="0 0 0.025" rpy="0 0 0"/>
+                <mass value="0.5"/>
+                <inertia
+                    ixx="${0.5 * 0.5 * lidar * lidar}"
+                    iyy="${(1/12) * 0.5 * (3 * lidar * lidar + lidar * lidar)}"
+                    izz="${(1/12) * 0.5 * (3 * lidar * lidar + lidar * lidar)}"
+                    ixy="0" ixz="0" iyz="0"/>
+            </inertial>
+    </link>
+
     <xacro:wheel_link prefix="left_"  name="wheel_link"/>
     <xacro:wheel_link prefix="right_" name="wheel_link"/>
 
@@ -114,7 +139,7 @@
     <joint name="base_imu_joint" type="fixed">
         <parent link="base_link" />
         <child link="imu_link" />
-        <origin xyz="0 0 ${base_height}" rpy="0 0 0"/>
+        <origin xyz="-0.2 0 ${base_height}" rpy="0 0 ${pi /2}"/>
     </joint>
 
     <joint name="base_left_wheel_joint" type="continuous">
@@ -135,6 +160,13 @@
         <parent link="base_link" />
         <child link="caster_wheel_link" />
         <origin xyz="${base_height} 0 -0.025" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="base_lidar_joint" type="continuous">
+        <parent link="base_link" />
+        <child link="lidar_link" />
+        <origin xyz="0.2 0 ${base_height}" rpy="0 0 0"/>
+        <axis xyz="0 0 1" />
     </joint>
 
 </robot>
